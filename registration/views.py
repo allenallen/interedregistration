@@ -59,13 +59,13 @@ def registration(request, uuid):
     # else:
     #     form = RegistrationForm()
     #
-    # context = {
-    #     'event_name': event.name,
-    #     'event_id': event.id,
-    #     'event_logo': event.logo,
-    #     'event_start_date': event.start_date,
-    #     'event_end_date': event.end_date,
-    #     'form': form
-    # }
-    # print(context)
-    # return render(request, 'registration.html', context=context)
+    context = {
+        'event_name': 'Inter-Ed Event',
+        'event_id': '2',
+        'event_logo': '',
+        'event_start_date': '2018-01-01',
+        'event_end_date': '2018-01-01',
+        'form': RegistrationForm()
+    }
+    print(context)
+    return render(request, 'registration.html', context=context)
