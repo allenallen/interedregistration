@@ -31,7 +31,7 @@ urlpatterns += [
 #     path('registration/', include('registration.urls'))
 # ]
 urlpatterns += [
-    path('<str:uuid>', views.registration, name='register')
+    path('event/<str:uuid>', views.registration, name='register')
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
