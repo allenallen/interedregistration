@@ -1,8 +1,9 @@
 {% extends 'base.html' %}
+{% load staticfiles %}
 
 {% block content %}
     <div class="py-5 text-center">
-        <img class="d-block mx-auto mb-4" src="/media/logos/picture/InterEd-Logo-WhiteBG2.png" alt="" width="40%">
+        <img class="d-block mx-auto mb-4" src="{% static "images/InterEd-Logo-WhiteBG2.png" %}" alt="" width="40%">
         <h2>{{ event_name }}</h2>
     </div>
     <div class="row">
