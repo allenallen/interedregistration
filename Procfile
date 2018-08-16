@@ -1,0 +1,1 @@
+web: gunicorn intered.wsgi --log-file -

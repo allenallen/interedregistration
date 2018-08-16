@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="py-5 text-center">
+        <img class="d-block mx-auto mb-4" src="/media/logos/picture/InterEd-Logo-WhiteBG2.png" alt="" width="40%">
+        <h2>{{ event_name }}</h2>
+    </div>
+    <div class="row">
+        <div class="col-md mb-3">
+            <p><b>THANK YOU FOR REGISTERING FOR INTER-ED'S 28TH CAREER CONSULTATION AND GUIDANCE FAIR - SEPT 4 & 5 - WORLD TRADE CENTER, MANILA.</b></p>
+            <p>We look forward to welcoming you to the event.</p>
+            <p><i>Please check you email and have your QR Code image saved on your phone or print it, it will serve as your ticket to the event!</i></p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-5 mb-3"></div>
+        <div class="col-md-2 mb-3">
+            <a href="{% url 'register' uuid=event_uuid%}" class="btn btn-info">Go Back to Registration Page</a>
+        </div>
+        <div class="col-md-5 mb-3"></div>
+    </div>
+{% endblock %}
