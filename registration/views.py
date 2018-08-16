@@ -10,7 +10,10 @@ def registration(request, uuid):
     print('HERE')
     print(request.method)
     print(uuid)
-    event = get_object_or_404(Event, event_uuid=uuid)
+    if uuid == '':
+        event = {}
+    else:
+        event = get_object_or_404(Event, event_uuid=uuid)
     if request.method == 'POST':
         print('HERE POST')
         form = RegistrationForm(request.POST)

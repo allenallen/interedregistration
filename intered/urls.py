@@ -22,7 +22,7 @@ from django.conf.urls.static import static
 from registration import views
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    url(r'^admin/', admin.site.urls),
 ]
 urlpatterns += [
     url(r'^s3direct/', include('s3direct.urls')),
