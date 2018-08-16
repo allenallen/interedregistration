@@ -2,6 +2,7 @@ from django.core.mail import send_mail, EmailMultiAlternatives, EmailMessage
 from django.shortcuts import render, get_object_or_404
 from django.template.loader import render_to_string
 
+from intered import settings
 from registration.forms import RegistrationForm
 from registration.models import Event, Student
 
@@ -41,7 +42,7 @@ def registration(request, uuid):
 
             html_message = render_to_string('email_template.html', {'context': {'qr_string': student.email}})
             print(html_message)
-            msg = EmailMessage('Thank You', html_message, 'allenarcenal@gmail.com', [student.email])
+            msg = EmailMessage('Thank You', html_message, settings.DEFAULT_FROM_EMAIL, [student.email])
 
             msg.attach(student.qr_code.name, student.qr_code.read(), 'image/png')
 
