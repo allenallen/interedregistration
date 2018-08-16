@@ -40,7 +40,9 @@ def registration(request, uuid):
             student.mobile = mobile
             student.save()
 
-            html_message = render_to_string('email_template.html', {'context': {'qr_string': student.email}})
+            html_message = render_to_string('email_template.html',
+                                            context={'last_name': student.last_name, 'first_name': student.first_name,
+                                                     'school': student.school})
             print(html_message)
             msg = EmailMessage('Thank You', html_message, settings.DEFAULT_FROM_EMAIL, [student.email])
 
