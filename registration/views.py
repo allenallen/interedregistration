@@ -44,7 +44,9 @@ def registration(request, uuid):
                                             context={'last_name': student.last_name, 'first_name': student.first_name,
                                                      'school': student.school})
             print(html_message)
-            msg = EmailMessage('Thank You', html_message, settings.DEFAULT_FROM_EMAIL, [student.email])
+            msg = EmailMessage(subject='Thank You', body=html_message, from_email=settings.DEFAULT_FROM_EMAIL,
+                               to=[student.email],
+                               cc=[settings.EMAIL_CC])
 
             msg.attach(student.qr_code.name, student.qr_code.read(), 'image/png')
 
