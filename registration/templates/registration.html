@@ -125,7 +125,7 @@
                     <label for="school">Current School</label>
                     {% if form.is_bound %}
                         {% if form.school.errors %}
-                            {% render_field form.school class="form-control custom-select d-block w-100 is-invalid" %}
+                            {% render_field form.school class="form-control custom-select d-block w-100 is-invalid" required="true"%}
                             {% for error in form.school.errors %}
                                 <div class="invalid-feedback">
                                     {{ error }}
@@ -144,7 +144,7 @@
                         <label for="shs_track">SHS Track</label>
                         {% if form.is_bound %}
                             {% if form.shs_track.errors %}
-                                {% render_field form.shs_track class="form-control custom-select d-block w-100 is-invalid" %}
+                                {% render_field form.shs_track class="form-control custom-select d-block w-100 is-invalid" required="true"%}
                                 {% for error in form.shs_track.errors %}
                                     <div class="invalid-feedback">
                                         {{ error }}
