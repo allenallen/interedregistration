@@ -2,12 +2,16 @@ beautifulsoup4==4.6.1
 cssutils==1.0.2
 dj-database-url==0.5.0
 Django==2.1
+django-excel-response==2.0.3
 django-inlinecss==0.1.2
 django-qr-code==1.0.0
 django-s3direct==1.0.4
 django-widget-tweaks==1.4.2
+et-xmlfile==1.0.1
 gunicorn==19.9.0
+jdcal==1.4
 mock==2.0.0
+openpyxl==2.4.11
 pbr==4.2.0
 Pillow==5.2.0
 psycopg2==2.7.5

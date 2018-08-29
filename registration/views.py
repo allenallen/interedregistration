@@ -1,10 +1,27 @@
 from django.core.mail import send_mail, EmailMultiAlternatives, EmailMessage
 from django.shortcuts import render, get_object_or_404
 from django.template.loader import render_to_string
+from excel_response import ExcelResponse
 
 from intered import settings
 from registration.forms import RegistrationForm
 from registration.models import Event, Student
+
+
+def extractStudents(request):
+    print('HERE')
+    students = Student.objects.all()
+
+    data = [['', 'Last Name', 'First Name', 'Current School', 'Track', 'Projected Course', 'Email', 'Mobile Number',
+             'Birthday', 'Gender']]
+
+    count = 0
+    for student in students:
+        count += 1
+        data += [[str(count), student.last_name, student.first_name, student.school.name, student.shs_track.code,
+                 student.projected_course, student.email, student.mobile, student.date_of_birth, student.gender]]
+    print(data)
+    return ExcelResponse(data, 'students')
 
 
 def registration(request, uuid):
