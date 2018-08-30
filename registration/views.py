@@ -1,11 +1,15 @@
+import json
+
 from django.core.mail import send_mail, EmailMultiAlternatives, EmailMessage
+from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
 from django.template.loader import render_to_string
 from excel_response import ExcelResponse
 
 from intered import settings
-from registration.forms import RegistrationForm
-from registration.models import Event, Student
+from registration.forms import RegistrationForm, SchoolForm
+from registration.models import Event, Student, SchoolList
+from django.views.decorators.csrf import csrf_exempt
 
 
 def extractStudents(request):
@@ -19,7 +23,7 @@ def extractStudents(request):
     for student in students:
         count += 1
         data += [[str(count), student.last_name, student.first_name, student.school.name, student.shs_track.code,
-                 student.projected_course, student.email, student.mobile, student.date_of_birth, student.gender]]
+                  student.projected_course, student.email, student.mobile, student.date_of_birth, student.gender]]
     print(data)
     return ExcelResponse(data, 'students')
 
@@ -88,3 +92,23 @@ def registration(request, uuid):
     }
     print(context)
     return render(request, 'registration.html', context=context)
+
+
+def SchoolNewPopup(request):
+    form = SchoolForm(request.POST or None)
+    if form.is_valid():
+        instance = form.save()
+        return HttpResponse(
+            '<script>opener.closePopup(window, "%s", "%s", "#id_school");</script>' % (instance.pk, instance))
+
+    return render(request, "school_form.html", {"form": form})
+
+
+@csrf_exempt
+def get_school_id(request):
+    if request.is_ajax():
+        school_name = request.GET['school_name']
+        school_id = SchoolList.objects.get(name=school_name).id
+        data = {'id':school_id}
+        return HttpResponse(json.dumps(data), content_type='application/json')
+    return HttpResponse("/")

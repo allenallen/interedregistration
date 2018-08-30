@@ -1,6 +1,6 @@
 from django import forms
 
-from registration.models import Student
+from registration.models import Student, SchoolList
 
 
 class RegistrationForm(forms.ModelForm):
@@ -21,4 +21,12 @@ class RegistrationForm(forms.ModelForm):
             raise forms.ValidationError("Email already exists")
 
         return email
+
+
+class SchoolForm(forms.ModelForm):
+    class Meta:
+        model = SchoolList
+        fields = [
+            "name"
+        ]
 

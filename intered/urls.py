@@ -20,6 +20,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 from registration import views
+from registration.views import SchoolNewPopup, get_school_id
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -32,7 +33,9 @@ urlpatterns += [
 # ]
 urlpatterns += [
     path('event/<str:uuid>', views.registration, name='register'),
-    path('students/extract', views.extractStudents, name='extract')
+    path('students/extract', views.extractStudents, name='extract'),
+    url(r'^register/school/create', SchoolNewPopup, name="schoolNew"),
+    url(r'^register/school/ajax/get_school_id', get_school_id, name="get_school_id")
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

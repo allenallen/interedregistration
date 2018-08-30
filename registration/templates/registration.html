@@ -125,7 +125,7 @@
                     <label for="school">Current School</label>
                     {% if form.is_bound %}
                         {% if form.school.errors %}
-                            {% render_field form.school class="form-control custom-select d-block w-100 is-invalid" required="true"%}
+                            {% render_field form.school class="form-control custom-select d-block w-100 is-invalid" required="true" onchange="schoolChange(this)" %}
                             {% for error in form.school.errors %}
                                 <div class="invalid-feedback">
                                     {{ error }}
@@ -137,6 +137,7 @@
                     {% else %}
                         {% render_field form.school class="form-control custom-select d-block w-100" %}
                     {% endif %}
+                    <a href="{% url 'schoolNew' %}" id="add_school" onclick="return showAddPopup(this);"><b>Click here if your school is not on the list</b></a>
                 </div>
                 <div class="w-100"></div>
                 <div class="row">
@@ -144,7 +145,7 @@
                         <label for="shs_track">SHS Track</label>
                         {% if form.is_bound %}
                             {% if form.shs_track.errors %}
-                                {% render_field form.shs_track class="form-control custom-select d-block w-100 is-invalid" required="true"%}
+                                {% render_field form.shs_track class="form-control custom-select d-block w-100 is-invalid" required="true" %}
                                 {% for error in form.shs_track.errors %}
                                     <div class="invalid-feedback">
                                         {{ error }}
@@ -191,6 +192,14 @@
     </div>
 
     <script>
+        function schoolChange(schoolSelect) {
+            var school = schoolSelect.value;
+            if (school.toUpperCase() === "OTHER") {
+
+            }
+        }
+    </script>
+    <script>
         $(function () {
             $(".datepicker").datepicker({
                 changeMonth: true,
@@ -217,5 +226,20 @@
                 }
             });
         });
+    </script>
+    <script type="text/javascript">
+        function showAddPopup(triggeringLink) {
+            var name = triggeringLink.id.replace(/^add_/, '');
+            href = triggeringLink.href;
+            var win = window.open(href, name, 'height=500,width=800,resizable=yes,scrollbars=yes');
+            win.focus();
+            return false;
+        }
+
+        function closePopup(win, newID, newRepr, id) {
+            $(id).append('<option value=' + newID + ' selected >' + newRepr + '</option>')
+            win.close();
+        }
+
     </script>
 {% endblock %}
