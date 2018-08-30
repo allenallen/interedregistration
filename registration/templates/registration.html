@@ -137,7 +137,10 @@
                     {% else %}
                         {% render_field form.school class="form-control custom-select d-block w-100" %}
                     {% endif %}
-{#                    <a href="{% url 'schoolNew' %}" id="add_school" onclick="return showAddPopup(this);"><b>Click here if your school is not on the list</b></a>#}
+                    <div id="other-picked" style="display: none">
+                        <a href="{% url 'schoolNew' %}" id="add_school" onclick="return showAddPopup(this);"><b>Click
+                            here if your school is not on the list</b></a>
+                    </div>
                 </div>
                 <div class="w-100"></div>
                 <div class="row">
@@ -193,9 +196,10 @@
 
     <script>
         function schoolChange(schoolSelect) {
-            var school = schoolSelect.value;
-            if (school.toUpperCase() === "OTHER") {
-
+            if (schoolSelect === '89' || schoolSelect === '90') {
+                document.getElementById("other-picked").style.display = 'block';
+            } else {
+                document.getElementById("other-picked").style.display = 'none';
             }
         }
     </script>
@@ -210,6 +214,11 @@
     </script>
     <script>
         $(document).ready(function () {
+            $("select[name=school]").change(function (event) {
+                console.log(event.target.value);
+                schoolChange(event.target.value);
+            });
+
             $("#id_mobile").keydown(function (e) {
                 // Allow: backspace, delete, tab, escape, enter and .
                 if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110]) !== -1 ||
