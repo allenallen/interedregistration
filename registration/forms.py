@@ -30,3 +30,10 @@ class SchoolForm(forms.ModelForm):
             "name"
         ]
 
+    def clean_name(self):
+        name = self.cleaned_data.get('name')
+        if SchoolList.objects.filter(name__iexact=name).count() > 0:
+            raise forms.ValidationError("School is already on the list")
+
+
+        return name
