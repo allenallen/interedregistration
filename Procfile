@@ -1,1 +1,1 @@
-web: gunicorn intered.wsgi --log-file -
+web: gunicorn intered.wsgi --timeout 30 --keep-alive 5 --log-file -
