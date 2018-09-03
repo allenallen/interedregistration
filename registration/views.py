@@ -14,7 +14,8 @@ from django.views.decorators.csrf import csrf_exempt
 
 def extractStudents(request):
     print('HERE')
-    students = Student.objects.all()
+    students = Student.objects.values_list('last_name', 'first_name', 'school__name', 'shs_track__code',
+                                           'projected_course', 'email', 'mobile', 'date_of_birth', 'gender')
 
     data = [['', 'Last Name', 'First Name', 'Current School', 'Track', 'Projected Course', 'Email', 'Mobile Number',
              'Birthday', 'Gender']]
@@ -22,8 +23,10 @@ def extractStudents(request):
     count = 0
     for student in students:
         count += 1
-        data += [[str(count), student.last_name, student.first_name, student.school.name, student.shs_track.code,
-                  student.projected_course, student.email, student.mobile, student.date_of_birth, student.gender]]
+        # data += [[str(count), student.last_name, student.first_name, student.school.name, student.shs_track.code,
+        #           student.projected_course, student.email, student.mobile, student.date_of_birth, student.gender]]
+        data += [[str(count), student[0], student[1], student[2], student[3],
+                  student[4], student[5], student[6], student[7], student[8]]]
     print(data)
     return ExcelResponse(data, 'students')
 
@@ -109,6 +112,6 @@ def get_school_id(request):
     if request.is_ajax():
         school_name = request.GET['school_name']
         school_id = SchoolList.objects.get(name=school_name).id
-        data = {'id':school_id}
+        data = {'id': school_id}
         return HttpResponse(json.dumps(data), content_type='application/json')
     return HttpResponse("/")
