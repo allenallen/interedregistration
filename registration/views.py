@@ -1,4 +1,5 @@
 import json
+from datetime import date
 
 from django.core.mail import send_mail, EmailMultiAlternatives, EmailMessage
 from django.http import HttpResponse
@@ -85,13 +86,16 @@ def registration(request, uuid):
     else:
         form = RegistrationForm()
 
+    is_expired = date.today() > event.end_date
+
     context = {
         'event_name': event.name,
         'event_id': event.id,
         'event_logo': event.logo,
         'event_start_date': event.start_date,
         'event_end_date': event.end_date,
-        'form': form
+        'form': form,
+        'is_expired': is_expired
     }
     print(context)
     return render(request, 'registration.html', context=context)
