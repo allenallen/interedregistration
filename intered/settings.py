@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'qr_code',
     'django_inlinecss',
     'django.contrib.admin',
-    's3direct'
+    's3direct',
+    'after_response'
 ]
 
 MIDDLEWARE = [

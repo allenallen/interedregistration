@@ -12,7 +12,10 @@ from registration.forms import RegistrationForm, SchoolForm
 from registration.models import Event, Student, SchoolList
 from django.views.decorators.csrf import csrf_exempt
 
+import after_response
 
+
+@after_response.enable
 def extractStudents(request):
     print('HERE')
     students = Student.objects.values_list('last_name', 'first_name', 'school__name', 'shs_track__code',
