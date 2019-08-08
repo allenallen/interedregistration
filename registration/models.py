@@ -80,6 +80,7 @@ class Student(models.Model):
     date_registered = models.DateTimeField(editable=False)
     date_modified = models.DateTimeField()
     qr_added = models.BooleanField(default=False)
+    registered_event = models.ForeignKey(Event, on_delete=models.SET_NULL, blank=True, null=True)
 
     def save(self, *args, **kwargs):
         if not self.id:

@@ -66,6 +66,7 @@ def registration(request, uuid):
             student.date_of_birth = date_of_birth
             student.gender = gender
             student.mobile = mobile
+            student.registered_event = event
             student.save()
 
             html_message = render_to_string('email_template.html',

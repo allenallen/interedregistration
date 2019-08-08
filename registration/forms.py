@@ -8,7 +8,8 @@ class RegistrationForm(forms.ModelForm):
         model = Student
         fields = (
             'last_name', 'first_name', 'school', 'shs_track', 'projected_course', 'email', 'date_of_birth', 'gender',
-            'mobile')
+            'mobile', 'registered_event')
+        widgets = {'registered_event': forms.HiddenInput()}
 
     def __init__(self, *args, **kwargs):
         super(RegistrationForm, self).__init__(*args, **kwargs)

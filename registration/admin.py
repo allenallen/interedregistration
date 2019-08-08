@@ -29,9 +29,9 @@ class StudentAdmin(admin.ModelAdmin, ExportCsvMixin):
     list_display = (
         'id', 'last_name', 'first_name', 'school', 'shs_track', 'projected_course', 'email',
         'date_of_birth', 'mobile',
-        'gender', 'date_registered')
+        'gender', 'date_registered', 'registered_event')
     actions = ['export_as_csv']
-    list_filter = ('school',)
+    list_filter = ('registered_event', 'school',)
     change_list_template = 'change_list.html'
 
 
