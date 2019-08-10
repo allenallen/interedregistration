@@ -1,5 +1,9 @@
 import json
+import smtplib
 from datetime import date
+from email.mime.base import MIMEBase
+from email.mime.image import MIMEImage
+from email.mime.multipart import MIMEMultipart
 
 from django.core.mail import send_mail, EmailMultiAlternatives, EmailMessage
 from django.http import HttpResponse
@@ -73,14 +77,31 @@ def registration(request, uuid):
                                             context={'last_name': student.last_name, 'first_name': student.first_name,
                                                      'school': student.school})
             print(html_message)
-            msg = EmailMessage(subject='Thank You', body=html_message, from_email=settings.DEFAULT_FROM_EMAIL,
-                               to=[student.email],
-                               cc=[settings.EMAIL_CC])
 
-            msg.attach(student.qr_code.name, student.qr_code.read(), 'image/png')
+            server = smtplib.SMTP('smtp.ionos.com', 587)
+            server.starttls()
+            server.login(settings.EMAIL_HOST_USER, settings.EMAIL_HOST_PASSWORD)
 
-            msg.content_subtype = 'html'
-            msg.send()
+            message = MIMEMultipart("alternative")
+            message["Subject"] = "Thank You"
+            message["From"] = settings.DEFAULT_FROM_EMAIL
+            message["To"] = student.email
+            message["Cc"] = settings.EMAIL_CC
+            message.attach(html_message)
+
+            part = MIMEImage(student.qr_code.read)
+            message.attach(part)
+
+            server.sendmail(settings.DEFAULT_FROM_EMAIL, student.email, message)
+            server.quit()
+            # msg = EmailMessage(subject='Thank You', body=html_message, from_email=settings.DEFAULT_FROM_EMAIL,
+            #                    to=[student.email],
+            #                    cc=[settings.EMAIL_CC])
+            #
+            # msg.attach(student.qr_code.name, student.qr_code.read(), 'image/png')
+            #
+            # msg.content_subtype = 'html'
+            # msg.send()
 
             return render(request, 'success.html', context={'student': student,
                                                             'event_name': event.name,
