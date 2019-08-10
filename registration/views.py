@@ -79,6 +79,7 @@ def registration(request, uuid):
 
             msg.attach(student.qr_code.name, student.qr_code.read(), 'image/png')
 
+            #change
             msg.content_subtype = 'html'
             msg.send()
 
