@@ -78,7 +78,9 @@ def registration(request, uuid):
                                cc=[settings.EMAIL_CC])
 
             msg.attach(student.qr_code.name, student.qr_code.read(), 'image/png')
-            print(msg)
+            print(msg.attachments)
+            print(msg.from_email)
+            print(msg.to)
             #change
             msg.content_subtype = 'html'
             msg.send(fail_silently=False)
