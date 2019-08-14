@@ -71,7 +71,7 @@ class Student(models.Model):
     school = models.ForeignKey(SchoolList, on_delete=models.SET_NULL, blank=True, null=True)
     shs_track = models.ForeignKey(ShsTrack, on_delete=models.SET_NULL, blank=True, null=True,
                                   verbose_name="Current SHS Track")
-    projected_course = models.CharField(max_length=200, help_text="First choice of Course", verbose_name="Course")
+    projected_course = models.CharField(max_length=200, help_text="First choice of Course", verbose_name="Course", blank=True, null=True)
     email = models.EmailField()
     mobile = models.CharField(max_length=20, verbose_name="Mobile Number", null=True, blank=True)
     date_of_birth = models.DateField(verbose_name="Date of Birth")
@@ -81,6 +81,7 @@ class Student(models.Model):
     date_modified = models.DateTimeField()
     qr_added = models.BooleanField(default=False)
     registered_event = models.ForeignKey(Event, on_delete=models.SET_NULL, blank=True, null=True)
+    grade_level = models.IntegerField(verbose_name="Grade Level", null=True, blank=True)
 
     def save(self, *args, **kwargs):
         if not self.id:

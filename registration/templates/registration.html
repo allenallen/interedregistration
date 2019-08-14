@@ -145,7 +145,39 @@
                 </div>
                 <div class="w-100"></div>
                 <div class="row">
-                    <div class="col-md-6 mb-3">
+                    <div class="col-md-4 mb-3">
+                        <label for="grade_level">Grade Level</label>
+                        {% if form.is_bound %}
+                            {% if form.shs_track.errors %}
+                                <select name="grade_level" class="form-control custom-select d-block w-100 is-invalid" id="id_grade_level">
+                                    {% for grade in grade_level %}
+                                        <option value="{{ grade.0 }}">{{ grade.1 }}</option>
+                                    {% endfor %}
+                                </select>
+                                {% for error in form.shs_track.errors %}
+                                    <div class="invalid-feedback">
+                                        {{ error }}
+                                    </div>
+                                {% endfor %}
+                            {% else %}
+                                <select name="grade_level" class="form-control custom-select d-block w-100 is-valid" id="id_grade_level">
+                                    {% for grade in grade_level %}
+                                        <option value="{{ grade.0 }}">{{ grade.1 }}</option>
+                                    {% endfor %}
+                                </select>
+                            {% endif %}
+                        {% else %}
+                            <select name="grade_level" class="form-control custom-select d-block w-100" id="id_grade_level">
+                                {% for grade in grade_level %}
+                                    <option value="{{ grade.0 }}">{{ grade.1 }}</option>
+                                {% endfor %}
+                            </select>
+                        {% endif %}
+                        <span id="otherGrade">
+                            {% render_field form.otherGrade class="form-control" %}
+                        </span>
+                    </div>
+                    <div class="col-md-4 mb-3">
                         <label for="shs_track">SHS Track</label>
                         {% if form.is_bound %}
                             {% if form.shs_track.errors %}
@@ -162,22 +194,40 @@
                             {% render_field form.shs_track class="form-control custom-select d-block w-100" %}
                         {% endif %}
                     </div>
-                    <div class="col-md-6 mb-3">
+                    <div class="col-md-4 mb-3">
                         <label for="projected_course">Projected Course</label>
                         {% if form.is_bound %}
                             {% if form.projected_course.errors %}
-                                {% render_field form.projected_course class="form-control is-invalid" %}
+                                <select name="projected_course" class="form-control custom-select d-block w-100 is-invalid" id="id_projected_course">
+                                    {% for course in courses %}
+                                        <option value="{{ course.0 }}">{{ course.1 }}</option>
+                                    {% endfor %}
+                                </select>
+                                {#                                {% render_field form.projected_course class="form-control is-invalid" %}#}
                                 {% for error in form.projected_course.errors %}
                                     <div class="invalid-feedback">
                                         {{ error }}
                                     </div>
                                 {% endfor %}
                             {% else %}
-                                {% render_field form.projected_course class="form-control is-valid" %}
+                                <select name="projected_course" class="form-control custom-select d-block w-100 is-valid" id="id_projected_course">
+                                    {% for course in courses %}
+                                        <option value="{{ course.0 }}">{{ course.1 }}</option>
+                                    {% endfor %}
+                                </select>
+                                {#                                {% render_field form.projected_course class="form-control is-valid" %}#}
                             {% endif %}
                         {% else %}
-                            {% render_field form.projected_course class="form-control" %}
+                            <select name="projected_course" class="form-control custom-select d-block w-100" id="id_projected_course">
+                                {% for course in courses %}
+                                    <option value="{{ course.0 }}">{{ course.1 }}</option>
+                                {% endfor %}
+                            </select>
+                            {#                            {% render_field form.projected_course class="form-control" %}#}
                         {% endif %}
+                        <span id="other">
+                            {% render_field form.other class="form-control" %}
+                        </span>
                     </div>
                 </div>
                 <hr class="mb-4">
@@ -191,7 +241,8 @@
                 </div>
                 <hr class="mb-4">
                 {% if is_expired %}
-                    <button class="btn btn-primary btn-lg btn-block" type="submit" disabled>Registration is Closed</button>
+                    <button class="btn btn-primary btn-lg btn-block" type="submit" disabled>Registration is Closed
+                    </button>
                 {% else %}
                     <button class="btn btn-primary btn-lg btn-block" type="submit">Submit</button>
                 {% endif %}
@@ -219,6 +270,8 @@
     </script>
     <script>
         $(document).ready(function () {
+            $("#other").hide();
+            $("#otherGrade").hide();
             $("select[name=school]").change(function (event) {
                 console.log(event.target.value);
                 schoolChange(event.target.value);
@@ -255,5 +308,27 @@
             win.close();
         }
 
+        $("#id_projected_course").on('change', function () {
+            console.log('change');
+            console.log(this.value);
+            if (this.value === 'OTHER') {
+                $("#other").show();
+                $("#other").attr('required');
+            } else {
+                $("#other").hide();
+                $("#other").removeAttr('required_id')
+            }
+        })
+        $("#id_grade_level").on('change', function () {
+            console.log('change');
+            console.log(this.value);
+            if (this.value === 'OTHER') {
+                $("#otherGrade").show();
+                $("#otherGrade").attr('required');
+            } else {
+                $("#otherGrade").hide();
+                $("#otherGrade").removeAttr('required_id');
+            }
+        })
     </script>
 {% endblock %}

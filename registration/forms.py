@@ -4,12 +4,16 @@ from registration.models import Student, SchoolList
 
 
 class RegistrationForm(forms.ModelForm):
+    other = forms.CharField(required=False, label="Other")
+    otherGrade = forms.IntegerField(required=False, label="Other", max_value=12, min_value=1)
+
     class Meta:
         model = Student
         fields = (
-            'last_name', 'first_name', 'school', 'shs_track', 'projected_course', 'email', 'date_of_birth', 'gender',
-            'mobile', 'registered_event')
-        widgets = {'registered_event': forms.HiddenInput()}
+            'last_name', 'first_name', 'school', 'grade_level', 'shs_track', 'projected_course', 'email',
+            'date_of_birth', 'gender',
+            'mobile', 'registered_event', 'other', 'otherGrade')
+        widgets = {'registered_event': forms.HiddenInput(), 'otherGrade': forms.NumberInput()}
 
     def __init__(self, *args, **kwargs):
         super(RegistrationForm, self).__init__(*args, **kwargs)
@@ -35,6 +39,5 @@ class SchoolForm(forms.ModelForm):
         name = self.cleaned_data.get('name')
         if SchoolList.objects.filter(name__iexact=name).count() > 0:
             raise forms.ValidationError("School is already on the list")
-
 
         return name

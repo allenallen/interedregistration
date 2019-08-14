@@ -27,7 +27,7 @@ class ExportCsvMixin:
 @admin.register(Student)
 class StudentAdmin(admin.ModelAdmin, ExportCsvMixin):
     list_display = (
-        'id', 'last_name', 'first_name', 'school', 'shs_track', 'projected_course', 'email',
+        'id', 'last_name', 'first_name', 'school', 'grade_level', 'shs_track', 'projected_course', 'email',
         'date_of_birth', 'mobile',
         'gender', 'date_registered', 'registered_event')
     actions = ['export_as_csv']

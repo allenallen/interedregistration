@@ -14,6 +14,65 @@ from django.views.decorators.csrf import csrf_exempt
 
 import after_response
 
+COURSES = (
+    ('Accounting', 'Accounting'), ('Bartending', 'Bartending'), ('Dentistry', 'Dentistry'),
+    ('Engineering(Industrial)', 'Engineering(Industrial)'), ('Tourism', 'Tourism'), ('Journalism', 'Journalism'),
+    ('IT', 'IT'), ('Legal Management', 'Legal Management'), ('Psychology', 'Psychology'),
+    ('Diplomacy/Foreign Service', 'Diplomacy/Foreign Service'),
+    ('Business Administration', 'Business Administration'), ('Dressmaking', 'Dressmaking'),
+    ('Management', 'Management'),
+    ('Military School', 'Military School'), ('HRM', 'HRM'),
+    ('Music Performance & Prod\'n', 'Music Performance & Prod\'n'),
+    ('Education - Early, Secondary, SPED', 'Education - Early, Secondary, SPED'),
+    ('Pilot(Private & Commercial)', 'Pilot(Private & Commercial'),
+    ('Engineering(Civil)', 'Engineering(Civil)'), ('Animation', 'Animation'),
+    ('Engineering(Computer)', 'Engineering(Computer)'),
+    ('Radiology', 'Radiology'), ('Architecture', 'Architecture'), ('Chemistry', 'Chemistry'),
+    ('Engineering(General)', 'Engineering(General)'),
+    ('Fine Arts', 'Fine Arts'), ('Computer Science & Programming', 'Computer Science & Programming'),
+    ('Occupational Therapy', 'Occupational Therapy'),
+    ('Marine Transportation & Seafaring', 'Marine Transportation & Seafaring'), ('Optometry', 'Optometry'),
+    ('Nursing', 'Nursing'),
+    ('Plumbing', 'Plumbing'), ('Med Tech', 'Med Tech'), ('Police', 'Police'), ('Medicine', 'Medicine'),
+    ('Geology', 'Geology'),
+    ('Housekeeping', 'Housekeeping'), ('Actuarial Science', 'Actuarial Science'),
+    ('Culinary Arts & Chef Studies', 'Culinary Arts & Chef Studies'),
+    ('Agriculture', 'Agriculture'),
+    ('Aeronautical Aviation Engineering & Maintenance', 'Aeronautical Aviation Engineering & Maintenance'),
+    ('Cruise Line', 'Cruise Line'), ('Engineering(Mechanical)', 'Engineering(Mechanical)'),
+    ('Interior Design', 'Interior Design'),
+    ('Marketing', 'Marketing'), ('Economics', 'Economics'),
+    ('English & Communication Arts', 'English & Communication Arts'),
+    ('Bread & Pastry', 'Bread & Pastry'), ('Banking & Finance', 'Banking & Finance'), ('Broadcasting', 'Broadcasting'),
+    ('Mass Communications', 'Mass Communication'), ('Customs', 'Customs'), ('Political Science', 'Political Science'),
+    ('Design', 'Design'),
+    ('Biology', 'Biology'), ('Human Resources', 'Human Resources'), ('Entrepreneurship', 'Entrepreneurship'),
+    ('Maths', 'Maths'),
+    ('Engineering(Electrical)', 'Engineering(Electrical)'), ('Social Worker', 'Social Worker'),
+    ('Criminology', 'Criminology'),
+    ('Speech Pathologist', 'Speech Pathologist'), ('Engineering(Electronics)', 'Engineering(Electronics)'),
+    ('Advertising', 'Advertising'),
+    ('Multimedia', 'Multimedia'), ('Public Health & Admin', 'Public Health & Admin'), ('Pharmacy', 'Pharmacy'),
+    ('Physics', 'Physics'),
+    ('Law', 'Law'), ('Engineering(Petroleum)', 'Engineering(Petroleum)'),
+    ('Engineering(Chemical)', 'Engineering(Chemical)'),
+    ('Environmental Studies', 'Environmental Studies'),
+    ('Information and Communication Technology', 'Information and Communication Technology'),
+    ('Biochemistry', 'Biochemistry'), ('Veterinary Science', 'Veterinary Science'),
+    ('Engineering(ECE)', 'Engineering(ECE)'),
+    ('Automotive & Motor Cycle', 'Automotive & Motor Cycle'), ('Fashion', 'Fashion'),
+    ('Make Up & Hair Dressing', 'Make UP & Hair Dressing'),
+    ('Guidance & Counseling', 'Guidance & Counseling'), ('Physical Therapy', 'Physical Therapy'),
+    ('History', 'History'),
+    ('Food Technology & Nutrition', 'Food Technology & Nutrition'), ('Public Health', 'Public Health'),
+    ('Flight Attendant', 'Flight Attendant'),
+    ('Sports', 'Sports'), ('Humanities', 'Humanities'), ('OTHER', 'Other (Please specify)')
+)
+
+GRADE_LEVEL = (
+    ('10', '10'), ('11', '11'), ('12', '12'), ('OTHER', 'Other')
+)
+
 
 @after_response.enable
 def extractStudents(request):
@@ -43,18 +102,31 @@ def registration(request, uuid):
     if request.method == 'POST':
         print('HERE POST')
         form = RegistrationForm(request.POST)
-        print(form)
+
         if form.is_valid():
             print('HERE VALID')
             last_name = form.cleaned_data['last_name']
             first_name = form.cleaned_data['first_name']
             school = form.cleaned_data['school']
             shs_track = form.cleaned_data['shs_track']
-            projected_course = form.cleaned_data['projected_course']
+            # projected_course = form.cleaned_data['projected_course']
             email = form.cleaned_data['email']
             date_of_birth = form.cleaned_data['date_of_birth']
             gender = form.cleaned_data['gender']
             mobile = form.cleaned_data['mobile']
+            print(form.cleaned_data['projected_course'])
+            print(form.cleaned_data['grade_level'])
+            if form.cleaned_data['projected_course'] == 'OTHER':
+                print('OTHER')
+                projected_course = form.cleaned_data['other']
+            else:
+                projected_course = form.cleaned_data['projected_course']
+
+            if form.cleaned_data['grade_level'] == 'OTHER':
+                print('OTHER')
+                grade_level = form.cleaned_data['otherGrade']
+            else:
+                grade_level = form.cleaned_data['grade_level']
 
             student = Student()
             student.last_name = last_name
@@ -67,6 +139,7 @@ def registration(request, uuid):
             student.gender = gender
             student.mobile = mobile
             student.registered_event = event
+            student.grade_level = grade_level
             student.save()
 
             html_message = render_to_string('email_template.html',
@@ -81,7 +154,7 @@ def registration(request, uuid):
             print(msg.from_email)
             print(msg.to)
             print(msg.connection)
-            #change
+            # change
             msg.content_subtype = 'html'
             msg.send(fail_silently=False)
 
@@ -102,7 +175,9 @@ def registration(request, uuid):
         'event_start_date': event.start_date,
         'event_end_date': event.end_date,
         'form': form,
-        'is_expired': is_expired
+        'is_expired': is_expired,
+        'courses': sorted(COURSES),
+        'grade_level': GRADE_LEVEL
     }
     print(context)
     return render(request, 'registration.html', context=context)
