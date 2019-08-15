@@ -242,7 +242,8 @@ def registration(request, uuid):
             return render(request, 'success.html', context={'student': student,
                                                             'event_name': event.name,
                                                             'event_id': event.id,
-                                                            'event_logo': event.logo})
+                                                            'event_logo': event.logo,
+                                                            'event_uuid': event.event_uuid})
     else:
         form = RegistrationForm()
 
