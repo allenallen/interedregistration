@@ -15,7 +15,11 @@
                     <h4 class="mb-3">Registration</h4>
                 </div>
                 <div class="col-md-6 text-right">
-                    <a class="btn btn-info" href="{% url 'register' uuid=event_uuid %}">Student Registration</a>
+                    <select class="btn btn-info" id="registration_type"
+                            onchange="changeView('{{ event_uuid }}', this.value)">
+                        <option value="OFFICIAL">School Official Registration</option>
+                        <option value="STUDENT">Student Registration</option>
+                    </select>
                 </div>
             </div>
 
@@ -272,6 +276,14 @@
         });
     </script>
     <script type="text/javascript">
+        function changeView(uuid, option) {
+            if (option === 'OFFICIAL') {
+                document.location.href = uuid + "/registration_school_official";
+            } else {
+                document.location.href = "/event/" + uuid;;
+            }
+        }
+
         $("#id_course_taken").on('change', function () {
             console.log('change');
             console.log(this.value);

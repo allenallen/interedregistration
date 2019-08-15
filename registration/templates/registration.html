@@ -15,8 +15,10 @@
                     <h4 class="mb-3">Registration</h4>
                 </div>
                 <div class="col-md-6 text-right">
-                    <a class="btn btn-info" href="{% url 'registration_school_official' uuid=event_uuid %}">School
-                        Official Registration</a>
+                    <select class="btn btn-info" id="registration_type" onchange="changeView('{{ event_uuid }}', this.value)">
+                        <option value="STUDENT">Student Registration</option>
+                        <option value="OFFICIAL">School Official Registration</option>
+                    </select>
                 </div>
             </div>
             <form method="POST">
@@ -322,6 +324,14 @@
         function closePopup(win, newID, newRepr, id) {
             $(id).append('<option value=' + newID + ' selected >' + newRepr + '</option>')
             win.close();
+        }
+
+        function changeView(uuid,option) {
+            if (option === 'OFFICIAL') {
+                document.location.href = uuid + "/registration_school_official";
+            } else {
+                document.location.href = "/event/" + uuid;
+            }
         }
 
         $("#id_projected_course").on('change', function () {
