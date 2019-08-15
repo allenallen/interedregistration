@@ -4,11 +4,12 @@ from registration.models import Student, SchoolList, SchoolOfficial
 
 
 class SchoolOfficialRegistrationForm(forms.ModelForm):
+    other = forms.CharField(required=False, label="Other")
     class Meta:
         model = SchoolOfficial
         fields = (
             'last_name', 'first_name', 'school', 'course_taken', 'email', 'date_of_birth', 'gender',
-            'mobile', 'registered_event', 'designation')
+            'mobile', 'registered_event', 'designation', 'other')
         widgets = {'registered_event': forms.HiddenInput()}
 
     def __init__(self, *args, **kwargs):
