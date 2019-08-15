@@ -248,6 +248,7 @@
     </script>
     <script>
         $(document).ready(function () {
+            $("#other").hide();
             $("select[name=school]").change(function (event) {
                 console.log(event.target.value);
                 schoolChange(event.target.value);
@@ -271,6 +272,18 @@
         });
     </script>
     <script type="text/javascript">
+        $("#id_course_taken").on('change', function () {
+            console.log('change');
+            console.log(this.value);
+            if (this.value === 'OTHER') {
+                $("#other").show();
+                $("#other").attr('required');
+            } else {
+                $("#other").hide();
+                $("#other").removeAttr('required_id')
+            }
+        });
+
         function showAddPopup(triggeringLink) {
             var name = triggeringLink.id.replace(/^add_/, '');
             href = triggeringLink.href;

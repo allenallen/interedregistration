@@ -108,7 +108,6 @@ def registration_school_official(request, uuid):
             last_name = form.cleaned_data['last_name']
             first_name = form.cleaned_data['first_name']
             school = form.cleaned_data['school']
-            shs_track = form.cleaned_data['shs_track']
             # projected_course = form.cleaned_data['projected_course']
             email = form.cleaned_data['email']
             date_of_birth = form.cleaned_data['date_of_birth']
