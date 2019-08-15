@@ -106,7 +106,65 @@ class Student(models.Model):
             border=4,
         )
         qr.add_data(
-            f'{self.first_name}|{self.last_name}|{self.email}|{self.mobile}|{self.school}|{self.shs_track}|{self.projected_course}|{self.date_of_birth}|{self.gender}')
+            f'{self.first_name}|{self.last_name}|{self.email}|{self.mobile}|{self.school}|{self.shs_track}|'
+            f'{self.projected_course}|{self.date_of_birth}|{self.gender}|{self.grade_level}')
+        qr.make(fit=True)
+
+        img = qr.make_image()
+
+        buffer = io.BytesIO()
+        img.save(buffer)
+        buffer.seek(0, os.SEEK_END)
+        filename = f'student-{self.last_name}.png'
+        filebuffer = InMemoryUploadedFile(
+            buffer, None, filename, 'image/png', buffer.tell(), None)
+        self.qr_code.save(filename, filebuffer)
+
+    class Meta:
+        ordering = ['id']
+
+
+class SchoolOfficial(models.Model):
+    last_name = models.CharField(max_length=100, verbose_name="Last Name")
+    first_name = models.CharField(max_length=200, verbose_name="First Name")
+    school = models.ForeignKey(SchoolList, on_delete=models.SET_NULL, blank=True, null=True)
+    course_taken = models.CharField(max_length=200, help_text="Course taken", verbose_name="Course", blank=True, null=True)
+    email = models.EmailField()
+    mobile = models.CharField(max_length=20, verbose_name="Mobile Number", null=True, blank=True)
+    date_of_birth = models.DateField(verbose_name="Date of Birth")
+    gender = models.CharField(max_length=1, choices=[('M', 'Male'), ('F', 'Female')])
+    qr_code = models.ImageField(null=True, upload_to='qrcode')
+    date_registered = models.DateTimeField(editable=False)
+    date_modified = models.DateTimeField()
+    qr_added = models.BooleanField(default=False)
+    registered_event = models.ForeignKey(Event, on_delete=models.SET_NULL, blank=True, null=True)
+    designation = models.CharField(max_length=200, verbose_name="Designation/Position", blank=True, null=True)
+
+    def save(self, *args, **kwargs):
+        if not self.id:
+            self.date_registered = timezone.now()
+            self.date_modified = timezone.now()
+            if self.qr_added is False:
+                self.qr_added = True
+                self.generate_qrcode()
+        return super(SchoolOfficial, self).save(*args, **kwargs)
+
+    def __str__(self):
+        return f'{self.last_name}, {self.first_name}'
+
+    def get_absolute_url(self):
+        return reverse('school-official-detail', args=[str(self.id)])
+
+    def generate_qrcode(self):
+        qr = qrcode.QRCode(
+            version=1,
+            error_correction=qrcode.constants.ERROR_CORRECT_L,
+            box_size=6,
+            border=4,
+        )
+        qr.add_data(
+            f'{self.first_name}|{self.last_name}|{self.email}|{self.mobile}|{self.school}|{self.course_taken}'
+            f'|{self.date_of_birth}|{self.gender}')
         qr.make(fit=True)
 
         img = qr.make_image()

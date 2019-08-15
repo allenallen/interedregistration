@@ -1,6 +1,26 @@
 from django import forms
 
-from registration.models import Student, SchoolList
+from registration.models import Student, SchoolList, SchoolOfficial
+
+
+class SchoolOfficialRegistrationForm(forms.ModelForm):
+    class Meta:
+        model = SchoolOfficial
+        fields = (
+            'last_name', 'first_name', 'school', 'course_taken', 'email', 'date_of_birth', 'gender',
+            'mobile', 'registered_event', 'designation')
+        widgets = {'registered_event': forms.HiddenInput()}
+
+    def __init__(self, *args, **kwargs):
+        super(SchoolOfficialRegistrationForm, self).__init__(*args, **kwargs)
+        self.fields['school'].required = True
+
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        if SchoolOfficial.objects.filter(email=email).count() > 0:
+            raise forms.ValidationError("Email already exists")
+
+        return email
 
 
 class RegistrationForm(forms.ModelForm):

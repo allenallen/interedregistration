@@ -3,7 +3,7 @@ import csv
 from django.contrib import admin
 from django.http import HttpResponse
 
-from .models import Student, SchoolList, Event, ShsTrack
+from .models import Student, SchoolList, Event, ShsTrack, SchoolOfficial
 
 
 class ExportCsvMixin:
@@ -22,6 +22,14 @@ class ExportCsvMixin:
         return response
 
     export_as_csv.short_description = "Export Selected"
+
+
+@admin.register(SchoolOfficial)
+class SchoolOfficialAdmin(admin.ModelAdmin):
+    list_display = (
+        'id', 'last_name', 'first_name', 'school', 'designation', 'course_taken', 'email', 'date_of_birth', 'mobile',
+        'gender', 'date_registered', 'registered_event')
+    list_filter = ('registered_event', 'school',)
 
 
 @admin.register(Student)

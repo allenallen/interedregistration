@@ -8,8 +8,8 @@ from django.template.loader import render_to_string
 from excel_response import ExcelResponse
 
 from intered import settings
-from registration.forms import RegistrationForm, SchoolForm
-from registration.models import Event, Student, SchoolList
+from registration.forms import RegistrationForm, SchoolForm, SchoolOfficialRegistrationForm
+from registration.models import Event, Student, SchoolList, SchoolOfficial
 from django.views.decorators.csrf import csrf_exempt
 
 import after_response
@@ -94,6 +94,87 @@ def extractStudents(request):
     return ExcelResponse(data, 'students')
 
 
+def registration_school_official(request, uuid):
+    print('HERE')
+    print(request.method)
+    print(uuid)
+    event = get_object_or_404(Event, event_uuid=uuid)
+    if request.method == 'POST':
+        print('HERE POST')
+        form = RegistrationForm(request.POST)
+
+        if form.is_valid():
+            print('HERE VALID')
+            last_name = form.cleaned_data['last_name']
+            first_name = form.cleaned_data['first_name']
+            school = form.cleaned_data['school']
+            shs_track = form.cleaned_data['shs_track']
+            # projected_course = form.cleaned_data['projected_course']
+            email = form.cleaned_data['email']
+            date_of_birth = form.cleaned_data['date_of_birth']
+            gender = form.cleaned_data['gender']
+            mobile = form.cleaned_data['mobile']
+            print(form.cleaned_data['course_taken'])
+            if form.cleaned_data['course_taken'] == 'OTHER':
+                print('OTHER')
+                course_taken = form.cleaned_data['other']
+            else:
+                course_taken = form.cleaned_data['course_taken']
+
+            schoolOfficial = SchoolOfficial()
+            schoolOfficial.last_name = last_name
+            schoolOfficial.first_name = first_name
+            schoolOfficial.school = school
+            schoolOfficial.course_taken = course_taken
+            schoolOfficial.email = email
+            schoolOfficial.date_of_birth = date_of_birth
+            schoolOfficial.gender = gender
+            schoolOfficial.mobile = mobile
+            schoolOfficial.registered_event = event
+            schoolOfficial.save()
+
+            html_message = render_to_string('email_template.html',
+                                            context={'last_name': schoolOfficial.last_name,
+                                                     'first_name': schoolOfficial.first_name,
+                                                     'school': schoolOfficial.school})
+            print(html_message)
+            msg = EmailMessage(subject='Thank You', body=html_message, from_email=settings.DEFAULT_FROM_EMAIL,
+                               to=[schoolOfficial.email],
+                               cc=[settings.EMAIL_CC])
+
+            msg.attach(schoolOfficial.qr_code.name, schoolOfficial.qr_code.read(), 'image/png')
+            print(msg.from_email)
+            print(msg.to)
+            print(msg.connection)
+            # change
+            msg.content_subtype = 'html'
+            msg.send(fail_silently=False)
+
+            return render(request, 'success.html', context={'official': schoolOfficial,
+                                                            'event_name': event.name,
+                                                            'event_id': event.id,
+                                                            'event_logo': event.logo,
+                                                            'event_uuid': event.event_uuid})
+    else:
+        form = SchoolOfficialRegistrationForm()
+
+    is_expired = date.today() > event.end_date
+
+    context = {
+        'event_uuid': event.event_uuid,
+        'event_name': event.name,
+        'event_id': event.id,
+        'event_logo': event.logo,
+        'event_start_date': event.start_date,
+        'event_end_date': event.end_date,
+        'form': form,
+        'is_expired': is_expired,
+        'courses': sorted(COURSES),
+    }
+    print(context)
+    return render(request, 'registration_school_official.html', context=context)
+
+
 def registration(request, uuid):
     print('HERE')
     print(request.method)
@@ -161,14 +242,14 @@ def registration(request, uuid):
             return render(request, 'success.html', context={'student': student,
                                                             'event_name': event.name,
                                                             'event_id': event.id,
-                                                            'event_logo': event.logo,
-                                                            'event_uuid': event.event_uuid})
+                                                            'event_logo': event.logo})
     else:
         form = RegistrationForm()
 
     is_expired = date.today() > event.end_date
 
     context = {
+        'event_uuid': event.event_uuid,
         'event_name': event.name,
         'event_id': event.id,
         'event_logo': event.logo,

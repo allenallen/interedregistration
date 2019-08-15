@@ -33,6 +33,7 @@ urlpatterns += [
 # ]
 urlpatterns += [
     path('event/<str:uuid>', views.registration, name='register'),
+    path('event/<str:uuid>/registration_school_official', views.registration_school_official, name='registration_school_official'),
     path('students/extract', views.extractStudents, name='extract'),
     url(r'^register/school/create', SchoolNewPopup, name="schoolNew"),
     url(r'^register/school/ajax/get_school_id', get_school_id, name="get_school_id")
