@@ -101,7 +101,7 @@ def registration_school_official(request, uuid):
     event = get_object_or_404(Event, event_uuid=uuid)
     if request.method == 'POST':
         print('HERE POST')
-        form = RegistrationForm(request.POST)
+        form = SchoolOfficialRegistrationForm(request.POST)
 
         if form.is_valid():
             print('HERE VALID')
@@ -182,7 +182,7 @@ def registration(request, uuid):
     event = get_object_or_404(Event, event_uuid=uuid)
     if request.method == 'POST':
         print('HERE POST')
-        form = SchoolOfficialRegistrationForm(request.POST)
+        form = RegistrationForm(request.POST)
 
         if form.is_valid():
             print('HERE VALID')
