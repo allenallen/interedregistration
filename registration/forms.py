@@ -16,12 +16,12 @@ class SchoolOfficialRegistrationForm(forms.ModelForm):
         super(SchoolOfficialRegistrationForm, self).__init__(*args, **kwargs)
         self.fields['school'].required = True
 
-    def clean_email(self):
-        email = self.cleaned_data.get('email')
-        if SchoolOfficial.objects.filter(email=email).count() > 0:
-            raise forms.ValidationError("Email already exists")
-
-        return email
+    # def clean_email(self):
+    #     email = self.cleaned_data.get('email')
+    #     if SchoolOfficial.objects.filter(email=email).count() > 0:
+    #         raise forms.ValidationError("Email already exists")
+    #
+    #     return email
 
 
 class RegistrationForm(forms.ModelForm):
@@ -41,12 +41,12 @@ class RegistrationForm(forms.ModelForm):
         self.fields['school'].required = True
         self.fields['shs_track'].required = True
 
-    def clean_email(self):
-        email = self.cleaned_data.get('email')
-        if Student.objects.filter(email=email).count() > 0:
-            raise forms.ValidationError("Email already exists")
-
-        return email
+    # def clean_email(self):
+    #     email = self.cleaned_data.get('email')
+    #     if Student.objects.filter(email=email).count() > 0:
+    #         raise forms.ValidationError("Email already exists")
+    #
+    #     return email
 
 
 class SchoolForm(forms.ModelForm):
