@@ -2,8 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="22e184e5-5376-4f52-8852-e8106f7353a3" name="Default" comment="">
+      <change afterPath="$PROJECT_DIR$/registration/templates/privacy_policy.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/registration/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/registration/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/intered/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/intered/urls.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -86,16 +87,6 @@
       </list>
     </option>
   </component>
-  <component name="FindInProjectRecents">
-    <findStrings>
-      <find>Django</find>
-      <find>STATIC_ROOT</find>
-      <find>wb-100</find>
-    </findStrings>
-    <replaceStrings>
-      <replace>w-100</replace>
-    </replaceStrings>
-  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
@@ -113,22 +104,22 @@
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/registration/templates" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="settings.editor.selected.configurable" value="preferences.keymap" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/registration/static/images" />
-      <recent name="$PROJECT_DIR$/registration/templates" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/registration/templates" />
       <recent name="$PROJECT_DIR$/intered" />
       <recent name="$PROJECT_DIR$/templates/admin" />
       <recent name="$PROJECT_DIR$/registration/static/css" />
       <recent name="$PROJECT_DIR$/registration/static" />
-      <recent name="$PROJECT_DIR$/registration/static/js" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/registration/static/images" />
+      <recent name="$PROJECT_DIR$/registration/templates" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -179,6 +170,16 @@
       <option name="presentableId" value="Default" />
       <updated>1533605428725</updated>
       <workItem from="1565272528711" duration="1567000" />
+      <workItem from="1565421967368" duration="1304000" />
+      <workItem from="1565739657694" duration="1356000" />
+      <workItem from="1565748427909" duration="1226000" />
+      <workItem from="1565762430622" duration="1743000" />
+      <workItem from="1565791163488" duration="10063000" />
+      <workItem from="1565880544889" duration="10038000" />
+      <workItem from="1565922421634" duration="144000" />
+      <workItem from="1566214869312" duration="34000" />
+      <workItem from="1566219882267" duration="898000" />
+      <workItem from="1566354249433" duration="571000" />
     </task>
     <servers />
   </component>

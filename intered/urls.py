@@ -18,6 +18,7 @@ from django.urls import path
 from django.conf.urls import include, static, url
 from django.conf import settings
 from django.conf.urls.static import static
+from django.views.generic import TemplateView
 
 from registration import views
 from registration.views import SchoolNewPopup, get_school_id
@@ -36,7 +37,8 @@ urlpatterns += [
     path('event/<str:uuid>/registration_school_official', views.registration_school_official, name='registration_school_official'),
     path('students/extract', views.extractStudents, name='extract'),
     url(r'^register/school/create', SchoolNewPopup, name="schoolNew"),
-    url(r'^register/school/ajax/get_school_id', get_school_id, name="get_school_id")
+    url(r'^register/school/ajax/get_school_id', get_school_id, name="get_school_id"),
+    url(r'^policy', TemplateView.as_view(template_name='privacy_policy.html'))
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
