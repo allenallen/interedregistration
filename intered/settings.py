@@ -141,6 +141,7 @@ EMAIL_HOST_USER = os.environ.get('EMAIL_HOST', '')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASSWORD', '')
 DEFAULT_FROM_EMAIL = os.environ.get('EMAIL_HOST', '')
 EMAIL_CC = os.environ.get('EMAIL_CC', '')
+EMAIL_CC_1 = os.environ.get('EMAIL_CC_1', '')
 
 SECURE_CONTENT_TYPE_NOSNIFF = True
 

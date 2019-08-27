@@ -139,7 +139,7 @@ def registration_school_official(request, uuid):
             print(html_message)
             msg = EmailMessage(subject='Thank You', body=html_message, from_email=settings.DEFAULT_FROM_EMAIL,
                                to=[schoolOfficial.email],
-                               cc=[settings.EMAIL_CC])
+                               cc=[settings.EMAIL_CC, settings.EMAIL_CC_1])
 
             msg.attach(schoolOfficial.qr_code.name, schoolOfficial.qr_code.read(), 'image/png')
             print(msg.from_email)
