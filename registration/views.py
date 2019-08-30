@@ -70,13 +70,13 @@ COURSES = (
 )
 
 GRADE_LEVEL = (
-    ('10', '10'), ('11', '11'), ('12', '12'), ('OTHER', 'Other')
+    ('10', '10'), ('11', '11'), ('12', '12'), (0, 'Other')
 )
 
 
 @after_response.enable
 def extractStudents(request):
-    print('HERE')
+    print('Extracting Students')
     students = Student.objects.values_list('last_name', 'first_name', 'school__name', 'shs_track__code',
                                            'projected_course', 'email', 'mobile', 'date_of_birth', 'gender')
 
@@ -90,21 +90,20 @@ def extractStudents(request):
         #           student.projected_course, student.email, student.mobile, student.date_of_birth, student.gender]]
         data += [[str(count), student[0], student[1], student[2], student[3],
                   student[4], student[5], student[6], student[7], student[8]]]
-    print(data)
+
     return ExcelResponse(data, 'students')
 
 
 def registration_school_official(request, uuid):
-    print('HERE')
-    print(request.method)
-    print(uuid)
+    print('GET form')
+
     event = get_object_or_404(Event, event_uuid=uuid)
     if request.method == 'POST':
-        print('HERE POST')
+        print('Form POST')
         form = SchoolOfficialRegistrationForm(request.POST)
 
         if form.is_valid():
-            print('HERE VALID')
+            print('VALID')
             last_name = form.cleaned_data['last_name']
             first_name = form.cleaned_data['first_name']
             school = form.cleaned_data['school']
@@ -136,15 +135,11 @@ def registration_school_official(request, uuid):
                                             context={'last_name': schoolOfficial.last_name,
                                                      'first_name': schoolOfficial.first_name,
                                                      'school': schoolOfficial.school})
-            print(html_message)
             msg = EmailMessage(subject='Thank You', body=html_message, from_email=settings.DEFAULT_FROM_EMAIL,
                                to=[schoolOfficial.email],
                                cc=[settings.EMAIL_CC, settings.EMAIL_CC_1])
 
             msg.attach(schoolOfficial.qr_code.name, schoolOfficial.qr_code.read(), 'image/png')
-            print(msg.from_email)
-            print(msg.to)
-            print(msg.connection)
             # change
             msg.content_subtype = 'html'
             msg.send(fail_silently=False)
@@ -170,17 +165,14 @@ def registration_school_official(request, uuid):
         'is_expired': is_expired,
         'courses': sorted(COURSES),
     }
-    print(context)
     return render(request, 'registration_school_official.html', context=context)
 
 
 def registration(request, uuid):
-    print('HERE')
-    print(request.method)
-    print(uuid)
+    print('Get FORM')
     event = get_object_or_404(Event, event_uuid=uuid)
     if request.method == 'POST':
-        print('HERE POST')
+        print('Form POST')
         form = RegistrationForm(request.POST)
 
         if form.is_valid():
@@ -199,12 +191,14 @@ def registration(request, uuid):
             if form.cleaned_data['projected_course'] == 'OTHER':
                 print('OTHER')
                 projected_course = form.cleaned_data['other']
+                print(projected_course)
             else:
                 projected_course = form.cleaned_data['projected_course']
 
-            if form.cleaned_data['grade_level'] == 'OTHER':
+            if form.cleaned_data['grade_level'] == 0:
                 print('OTHER')
                 grade_level = form.cleaned_data['otherGrade']
+                print(grade_level)
             else:
                 grade_level = form.cleaned_data['grade_level']
 
@@ -225,15 +219,12 @@ def registration(request, uuid):
             html_message = render_to_string('email_template.html',
                                             context={'last_name': student.last_name, 'first_name': student.first_name,
                                                      'school': student.school})
-            print(html_message)
+
             msg = EmailMessage(subject='Thank You', body=html_message, from_email=settings.DEFAULT_FROM_EMAIL,
                                to=[student.email],
-                               cc=[settings.EMAIL_CC])
+                               cc=[settings.EMAIL_CC, settings.EMAIL_CC_1])
 
             msg.attach(student.qr_code.name, student.qr_code.read(), 'image/png')
-            print(msg.from_email)
-            print(msg.to)
-            print(msg.connection)
             # change
             msg.content_subtype = 'html'
             msg.send(fail_silently=False)
@@ -260,7 +251,7 @@ def registration(request, uuid):
         'courses': sorted(COURSES),
         'grade_level': GRADE_LEVEL
     }
-    print(context)
+
     return render(request, 'registration.html', context=context)
 
 

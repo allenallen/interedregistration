@@ -2,9 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="22e184e5-5376-4f52-8852-e8106f7353a3" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/registration/templates/privacy_policy.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/qrcode/student-Arcenal_fKpq4Xk.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/qrcode/student-Arcenal_uecscEW.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/intered/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/intered/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/intered/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/intered/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/registration/templates/registration.html" beforeDir="false" afterPath="$PROJECT_DIR$/registration/templates/registration.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/registration/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/registration/views.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -179,7 +182,9 @@
       <workItem from="1565922421634" duration="144000" />
       <workItem from="1566214869312" duration="34000" />
       <workItem from="1566219882267" duration="898000" />
-      <workItem from="1566354249433" duration="571000" />
+      <workItem from="1566354249433" duration="1557000" />
+      <workItem from="1566880181247" duration="448000" />
+      <workItem from="1567166615666" duration="1134000" />
     </task>
     <servers />
   </component>

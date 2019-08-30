@@ -348,7 +348,7 @@
         $("#id_grade_level").on('change', function () {
             console.log('change');
             console.log(this.value);
-            if (this.value === 'OTHER') {
+            if (this.value == 0) {
                 $("#otherGrade").show();
                 $("#otherGrade").attr('required');
             } else {
