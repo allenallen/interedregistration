@@ -100,7 +100,7 @@ def registration_school_official(request, uuid):
     event = get_object_or_404(Event, event_uuid=uuid)
     if request.method == 'POST':
         print('Form POST')
-        form = SchoolOfficialRegistrationForm(request.POST)
+        form = SchoolOfficialRegistrationForm(request.POST, event_uuid=uuid)
 
         if form.is_valid():
             print('VALID')
@@ -150,7 +150,7 @@ def registration_school_official(request, uuid):
                                                             'event_logo': event.logo,
                                                             'event_uuid': event.event_uuid})
     else:
-        form = SchoolOfficialRegistrationForm()
+        form = SchoolOfficialRegistrationForm(event_uuid=uuid)
 
     is_expired = date.today() > event.end_date
 
