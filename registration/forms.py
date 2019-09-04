@@ -1,6 +1,6 @@
 from django import forms
 
-from registration.models import Student, SchoolList, SchoolOfficial
+from registration.models import Student, SchoolList, SchoolOfficial, Event
 
 
 class SchoolOfficialRegistrationForm(forms.ModelForm):
@@ -33,20 +33,26 @@ class RegistrationForm(forms.ModelForm):
         fields = (
             'last_name', 'first_name', 'school', 'grade_level', 'shs_track', 'projected_course', 'email',
             'date_of_birth', 'gender',
-            'mobile', 'registered_event', 'other', 'otherGrade')
-        widgets = {'registered_event': forms.HiddenInput(), 'otherGrade': forms.NumberInput()}
+            'mobile',  'other', 'otherGrade')
+        widgets = {'otherGrade': forms.NumberInput()}
 
     def __init__(self, *args, **kwargs):
+        self.event_uuid = kwargs.pop('event_uuid')
         super(RegistrationForm, self).__init__(*args, **kwargs)
         self.fields['school'].required = True
         self.fields['shs_track'].required = True
 
-    # def clean_email(self):
-    #     email = self.cleaned_data.get('email')
-    #     if Student.objects.filter(email=email).count() > 0:
-    #         raise forms.ValidationError("Email already exists")
-    #
-    #     return email
+    def clean_email(self):
+        event = Event.objects.get(event_uuid=self.event_uuid)
+        email = self.cleaned_data.get('email')
+
+        print(event.event_uuid)
+        print(email)
+
+        if Student.objects.filter(email=email, registered_event=event).count() > 0:
+            raise forms.ValidationError('Email already exists')
+
+        return email
 
 
 class SchoolForm(forms.ModelForm):
