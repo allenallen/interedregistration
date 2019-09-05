@@ -41,6 +41,7 @@ class StudentAdmin(admin.ModelAdmin, ExportCsvMixin):
     actions = ['export_as_csv']
     list_filter = ('registered_event', 'school',)
     change_list_template = 'change_list.html'
+    search_fields = ('first_name', 'last_name', 'email')
 
 
 @admin.register(Event)
