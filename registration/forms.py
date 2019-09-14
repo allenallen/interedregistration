@@ -48,17 +48,17 @@ class RegistrationForm(forms.ModelForm):
         self.fields['school'].required = True
         self.fields['shs_track'].required = True
 
-    def clean_email(self):
-        event = Event.objects.get(event_uuid=self.event_uuid)
-        email = self.cleaned_data.get('email')
-
-        print(event.event_uuid)
-        print(email)
-
-        if Student.objects.filter(email=email, registered_event=event).count() > 0:
-            raise forms.ValidationError('Email already exists')
-
-        return email
+    # def clean_email(self):
+    #     event = Event.objects.get(event_uuid=self.event_uuid)
+    #     email = self.cleaned_data.get('email')
+    #
+    #     print(event.event_uuid)
+    #     print(email)
+    #
+    #     if Student.objects.filter(email=email, registered_event=event).count() > 0:
+    #         raise forms.ValidationError('Email already exists')
+    #
+    #     return email
 
 
 class SchoolForm(forms.ModelForm):
