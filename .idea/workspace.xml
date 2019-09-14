@@ -2,13 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="22e184e5-5376-4f52-8852-e8106f7353a3" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/media/qrcode/student-Arcenal_dCQsHdX.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/intered.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/intered.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/intered/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/intered/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/qrcode/student-Test.png" beforeDir="false" afterPath="$PROJECT_DIR$/media/qrcode/student-Test.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/registration/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/registration/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/registration/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/registration/admin.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -185,10 +180,18 @@
       <workItem from="1566219882267" duration="898000" />
       <workItem from="1566354249433" duration="1557000" />
       <workItem from="1566880181247" duration="448000" />
+<<<<<<< HEAD
       <workItem from="1567166615666" duration="1134000" />
       <workItem from="1567419462671" duration="786000" />
       <workItem from="1568440590654" duration="369000" />
       <workItem from="1568445116668" duration="1938000" />
+=======
+      <workItem from="1567166615666" duration="1393000" />
+      <workItem from="1567436007797" duration="2771000" />
+      <workItem from="1567606320408" duration="104000" />
+      <workItem from="1567606474589" duration="2961000" />
+      <workItem from="1567725914773" duration="543000" />
+>>>>>>> 585c1b21cb89655b7663bcdb1ceb7bbbe50e0dd6
     </task>
     <servers />
   </component>
