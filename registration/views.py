@@ -1,7 +1,7 @@
 import json
 from datetime import date
 
-from django.core.mail import send_mail, EmailMultiAlternatives, EmailMessage
+from django.core.mail import get_connection, send_mail, EmailMultiAlternatives, EmailMessage
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
 from django.template.loader import render_to_string
@@ -142,7 +142,17 @@ def registration_school_official(request, uuid):
             msg.attach(schoolOfficial.qr_code.name, schoolOfficial.qr_code.read(), 'image/png')
             # change
             msg.content_subtype = 'html'
-            msg.send(fail_silently=False)
+
+            try:
+                msg.send(fail_silently=False)
+            except:
+                connection = get_connection(
+                    host=settings.EMAIL_HOST_BACKUP,
+                    port=settings.EMAIL_PORT,
+                    username=settings.EMAIL_HOST_USER_BACKUP1,
+                    password=settings.EMAIL_HOST_USER_BACKUP_PASSWORD,
+                )
+                msg.send(connection)
 
             return render(request, 'success.html', context={'official': schoolOfficial,
                                                             'event_name': event.name,
@@ -227,7 +237,17 @@ def registration(request, uuid):
             msg.attach(student.qr_code.name, student.qr_code.read(), 'image/png')
             # change
             msg.content_subtype = 'html'
-            msg.send(fail_silently=False)
+
+            try:
+                msg.send(fail_silently=False)
+            except:
+                connection = get_connection(
+                    host=settings.EMAIL_HOST_BACKUP,
+                    port=settings.EMAIL_PORT,
+                    username=settings.EMAIL_HOST_USER_BACKUP1,
+                    password=settings.EMAIL_HOST_USER_BACKUP_PASSWORD,
+                )
+                msg.send(connection)
 
             return render(request, 'success.html', context={'student': student,
                                                             'event_name': event.name,
