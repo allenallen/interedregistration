@@ -156,7 +156,7 @@ def registration_school_official(request, uuid):
                     host=settings.EMAIL_HOST,
                     port=settings.EMAIL_PORT,
                     username=settings.EMAIL_HOST_USER_BACKUP1,
-                    password=settings.EMAIL_HOST_USER_BACKUP_PASSWORD,
+                    password=settings.EMAIL_HOST_PASSWORD,
                     )
                     msg.send(connection)
                 except:
