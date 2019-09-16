@@ -135,24 +135,44 @@ def registration_school_official(request, uuid):
                                             context={'last_name': schoolOfficial.last_name,
                                                      'first_name': schoolOfficial.first_name,
                                                      'school': schoolOfficial.school})
-            msg = EmailMessage(subject='Thank You', body=html_message, from_email=settings.DEFAULT_FROM_EMAIL,
-                               to=[schoolOfficial.email],
-                               cc=[settings.EMAIL_CC, settings.EMAIL_CC_1])
-
-            msg.attach(schoolOfficial.qr_code.name, schoolOfficial.qr_code.read(), 'image/png')
-            # change
-            msg.content_subtype = 'html'
 
             try:
+                msg = EmailMessage(subject='Thank You', body=html_message, from_email=settings.EMAIL_HOST_USER,
+                                   to=[schoolOfficial.email],
+                                   cc=[settings.EMAIL_CC, settings.EMAIL_CC_1])
+
+                msg.attach(schoolOfficial.qr_code.name, schoolOfficial.qr_code.read(), 'image/png')
+                msg.content_subtype = 'html'
                 msg.send(fail_silently=False)
             except:
-                connection = get_connection(
-                    host=settings.EMAIL_HOST_BACKUP,
+                try:
+                    msg = EmailMessage(subject='Thank You', body=html_message, from_email=settings.EMAIL_HOST_USER_BACKUP1,
+                                       to=[schoolOfficial.email],
+                                       cc=[settings.EMAIL_CC, settings.EMAIL_CC_1])
+
+                    msg.attach(schoolOfficial.qr_code.name, schoolOfficial.qr_code.read(), 'image/png')
+                    msg.content_subtype = 'html'
+                    connection = get_connection(
+                    host=settings.EMAIL_HOST,
                     port=settings.EMAIL_PORT,
                     username=settings.EMAIL_HOST_USER_BACKUP1,
                     password=settings.EMAIL_HOST_USER_BACKUP_PASSWORD,
-                )
-                msg.send(connection)
+                    )
+                    msg.send(connection)
+                except:
+                    msg = EmailMessage(subject='Thank You', body=html_message, from_email=settings.EMAIL_HOST_USER_BACKUP2,
+                                       to=[schoolOfficial.email],
+                                       cc=[settings.EMAIL_CC, settings.EMAIL_CC_1])
+
+                    msg.attach(schoolOfficial.qr_code.name, schoolOfficial.qr_code.read(), 'image/png')
+                    msg.content_subtype = 'html'
+                    connection = get_connection(
+                        host=settings.EMAIL_HOST_BACKUP,
+                        port=settings.EMAIL_PORT,
+                        username=settings.EMAIL_HOST_USER_BACKUP2,
+                        password=settings.EMAIL_HOST_USER_BACKUP_PASSWORD,
+                    )
+                    msg.send(connection)
 
             return render(request, 'success.html', context={'official': schoolOfficial,
                                                             'event_name': event.name,

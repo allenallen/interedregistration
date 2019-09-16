@@ -134,12 +134,12 @@ MEDIA_ROOT = (
 )
 
 EMAIL_USE_TLS = True
-EMAIL_HOST_BACKUP = 'smtp.gmail.com'
-EMAIL_HOST = 'smtp.ionos.com'
+EMAIL_HOST_BACKUP = 'smtp.ionos.com'
+EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
-EMAIL_HOST_USER = os.environ.get('EMAIL_HOST', 'events@inter-ed.com')
-EMAIL_HOST_USER_BACKUP1 = os.environ.get('EMAIL_HOST_USER_BACKUP1','interedevents@gmail.com')
-EMAIL_HOST_USER_BACKUP2 = os.environ.get('EMAIL_HOST_USER_BACKUP1','interedevents2@gmail.com')
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST', 'interedevents@gmail.com')
+EMAIL_HOST_USER_BACKUP1 = os.environ.get('EMAIL_HOST_USER_BACKUP1','interedevents2@gmail.com')
+EMAIL_HOST_USER_BACKUP2 = os.environ.get('EMAIL_HOST_USER_BACKUP2','events@inter-ed.com')
 EMAIL_HOST_USER_BACKUP_PASSWORD = os.environ.get('EMAIL_HOST_USER_BACKUP_PASSWORD', 'Inter811#')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASSWORD', 'Inter811#')
 DEFAULT_FROM_EMAIL = os.environ.get('EMAIL_HOST', 'events@inter-ed.com')
