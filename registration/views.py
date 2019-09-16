@@ -1,5 +1,6 @@
 import json
 from datetime import date
+from smtplib import SMTPException
 
 from django.core.mail import get_connection, send_mail, EmailMultiAlternatives, EmailMessage
 from django.http import HttpResponse
@@ -144,7 +145,7 @@ def registration_school_official(request, uuid):
                 msg.attach(schoolOfficial.qr_code.name, schoolOfficial.qr_code.read(), 'image/png')
                 msg.content_subtype = 'html'
                 msg.send(fail_silently=False)
-            except:
+            except SMTPException as e:
                 try:
                     msg = EmailMessage(subject='Thank You', body=html_message, from_email=settings.EMAIL_HOST_USER_BACKUP1,
                                        to=[schoolOfficial.email],
@@ -159,7 +160,7 @@ def registration_school_official(request, uuid):
                     password=settings.EMAIL_HOST_PASSWORD,
                     )
                     msg.send(connection)
-                except:
+                except SMTPException as e:
                     msg = EmailMessage(subject='Thank You', body=html_message, from_email=settings.EMAIL_HOST_USER_BACKUP2,
                                        to=[schoolOfficial.email],
                                        cc=[settings.EMAIL_CC, settings.EMAIL_CC_1])
