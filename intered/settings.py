@@ -24,7 +24,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', '1')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = bool(os.environ.get('DJANGO_DEBUG', True))
+DEBUG = bool(os.environ.get('DJANGO_DEBUG', False))
 
 ALLOWED_HOSTS = ['::1', 'intered-web-admin.herokuapp.com', '127.0.0.1', 'interedregistration.herokuapp.com',  '0.0.0.0', 'localhost']
 
@@ -134,8 +134,8 @@ MEDIA_ROOT = (
 )
 
 EMAIL_USE_TLS = True
-EMAIL_HOST_BACKUP = 'smtp.ionos.com'
-EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_BACKUP = 'smtp.gmail.com'
+EMAIL_HOST = 'smtp.ionos.com'
 EMAIL_PORT = 587
 EMAIL_HOST_USER = os.environ.get('EMAIL_HOST', 'interedevents@gmail.com')
 EMAIL_HOST_USER_BACKUP1 = os.environ.get('EMAIL_HOST_USER_BACKUP1','interedevents2@gmail.com')

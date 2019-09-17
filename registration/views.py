@@ -144,7 +144,7 @@ def registration_school_official(request, uuid):
 
                 msg.attach(schoolOfficial.qr_code.name, schoolOfficial.qr_code.read(), 'image/png')
                 msg.content_subtype = 'html'
-                msg.send(fail_silently=False)
+                msg.send(fail_silently=True)
             except Exception as e:
                 try:
                     msg = EmailMessage(subject='Thank You', body=html_message, from_email=settings.EMAIL_HOST_USER_BACKUP1,
@@ -159,7 +159,8 @@ def registration_school_official(request, uuid):
                     username=settings.EMAIL_HOST_USER_BACKUP1,
                     password=settings.EMAIL_HOST_PASSWORD,
                     )
-                    msg.send(connection)
+                    msg.connection = connection
+                    msg.send(fail_silently=True)
                 except Exception as e:
                     msg = EmailMessage(subject='Thank You', body=html_message, from_email=settings.EMAIL_HOST_USER_BACKUP2,
                                        to=[schoolOfficial.email],
@@ -168,12 +169,13 @@ def registration_school_official(request, uuid):
                     msg.attach(schoolOfficial.qr_code.name, schoolOfficial.qr_code.read(), 'image/png')
                     msg.content_subtype = 'html'
                     connection = get_connection(
-                        host=settings.EMAIL_HOST_BACKUP,
+                        host=settings.EMAIL_HOST,
                         port=settings.EMAIL_PORT,
                         username=settings.EMAIL_HOST_USER_BACKUP2,
                         password=settings.EMAIL_HOST_USER_BACKUP_PASSWORD,
                     )
-                    msg.send(connection)
+                    msg.connection = connection
+                    msg.send(fail_silently=True)
 
             return render(request, 'success.html', context={'official': schoolOfficial,
                                                             'event_name': event.name,
