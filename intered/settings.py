@@ -134,8 +134,8 @@ MEDIA_ROOT = (
 )
 
 EMAIL_USE_TLS = True
-EMAIL_HOST_BACKUP = 'smtp.gmail.com'
-EMAIL_HOST = 'smtp.ionos.com'
+EMAIL_HOST_BACKUP = os.environ.get('EMAIL_SMTP_BACKUP', 'smtp.gmail.com')
+EMAIL_HOST = os.environ.get('EMAIL_SMTP', 'smtp.ionos.com')
 EMAIL_PORT = 587
 EMAIL_HOST_USER = os.environ.get('EMAIL_HOST', 'interedevents@gmail.com')
 EMAIL_HOST_USER_BACKUP1 = os.environ.get('EMAIL_HOST_USER_BACKUP1','interedevents2@gmail.com')
