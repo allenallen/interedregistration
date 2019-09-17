@@ -143,7 +143,7 @@ def registration_school_official(request, uuid):
                                    cc=[settings.EMAIL_CC, settings.EMAIL_CC_1])
 
                 msg.attach(schoolOfficial.qr_code.name, schoolOfficial.qr_code.read(), 'image/png')
-                msg.content_subtype = 'html'
+                msg.content_subtype = 'html' #this
                 msg.send(fail_silently=True)
             except Exception as e:
                 try:
