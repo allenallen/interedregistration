@@ -263,20 +263,22 @@ def registration(request, uuid):
 
             try:
                 msg.send(fail_silently=False)
-            except:
+            except Exception as e:
                 connection = get_connection(
                     host=settings.EMAIL_HOST_BACKUP,
                     port=settings.EMAIL_PORT,
                     username=settings.EMAIL_HOST_USER_BACKUP1,
                     password=settings.EMAIL_HOST_USER_BACKUP_PASSWORD,
                 )
-                msg.send(connection)
+                msg.connection = connection
+                msg.send(fail_silently=False)
 
             return render(request, 'success.html', context={'student': student,
                                                             'event_name': event.name,
                                                             'event_id': event.id,
                                                             'event_logo': event.logo,
-                                                            'event_uuid': event.event_uuid})
+                                                            'event_uuid': event.event_uuid,
+                                                            'qr': student.qr_code.url})
     else:
         form = RegistrationForm(event_uuid=uuid)
 

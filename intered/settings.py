@@ -24,7 +24,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', '1')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = bool(os.environ.get('DJANGO_DEBUG', False))
+DEBUG = bool(os.environ.get('DJANGO_DEBUG', True))
 
 ALLOWED_HOSTS = ['::1', 'intered-web-admin.herokuapp.com', '127.0.0.1', 'interedregistration.herokuapp.com',  '0.0.0.0', 'localhost']
 
@@ -135,12 +135,12 @@ MEDIA_ROOT = (
 
 EMAIL_USE_TLS = True
 EMAIL_HOST_BACKUP = os.environ.get('EMAIL_SMTP_BACKUP', 'smtp.gmail.com')
-EMAIL_HOST = os.environ.get('EMAIL_SMTP', 'smtp.ionos.com')
+EMAIL_HOST = os.environ.get('EMAIL_SMTP', 'smtp.gmail.com')
 EMAIL_PORT = 587
 EMAIL_HOST_USER = os.environ.get('EMAIL_HOST', 'interedevents@gmail.com')
-EMAIL_HOST_USER_BACKUP1 = os.environ.get('EMAIL_HOST_USER_BACKUP1','interedevents2@gmail.com')
+EMAIL_HOST_USER_BACKUP1 = os.environ.get('EMAIL_HOST_USER_BACKUP1','interedevents4@gmail.com')
 EMAIL_HOST_USER_BACKUP2 = os.environ.get('EMAIL_HOST_USER_BACKUP2','events@inter-ed.com')
-EMAIL_HOST_USER_BACKUP_PASSWORD = os.environ.get('EMAIL_HOST_USER_BACKUP_PASSWORD', 'Inter811#')
+EMAIL_HOST_USER_BACKUP_PASSWORD = os.environ.get('EMAIL_HOST_USER_BACKUP_PASSWORD', 'Intered811#')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASSWORD', 'Inter811#')
 DEFAULT_FROM_EMAIL = os.environ.get('EMAIL_HOST', 'events@inter-ed.com')
 EMAIL_CC = os.environ.get('EMAIL_CC', 'allenarcenal@gmail.com')
