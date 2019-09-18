@@ -181,7 +181,8 @@ def registration_school_official(request, uuid):
                                                             'event_name': event.name,
                                                             'event_id': event.id,
                                                             'event_logo': event.logo,
-                                                            'event_uuid': event.event_uuid})
+                                                            'event_uuid': event.event_uuid,
+                                                            'qr': schoolOfficial.qr_code.url})
     else:
         form = SchoolOfficialRegistrationForm(event_uuid=uuid)
 
