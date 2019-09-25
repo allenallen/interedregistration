@@ -25,11 +25,12 @@ class ExportCsvMixin:
 
 
 @admin.register(SchoolOfficial)
-class SchoolOfficialAdmin(admin.ModelAdmin):
+class SchoolOfficialAdmin(admin.ModelAdmin, ExportCsvMixin):
     list_display = (
         'id', 'last_name', 'first_name', 'school', 'designation', 'course_taken', 'email', 'date_of_birth', 'mobile',
         'gender', 'date_registered', 'registered_event')
     list_filter = ('registered_event', 'school',)
+    actions = ['export_as_csv']
 
 
 @admin.register(Student)
