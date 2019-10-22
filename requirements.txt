@@ -23,7 +23,7 @@ kombu==4.2.1
 mock==2.0.0
 openpyxl==2.4.11
 pbr==4.2.0
-Pillow==5.2.0
+Pillow==6.2.0
 psycopg2==2.7.5
 pynliner3==0.6
 pytz==2018.5
