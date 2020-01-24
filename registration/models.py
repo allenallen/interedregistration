@@ -12,10 +12,11 @@ from django.dispatch import receiver
 from django.urls import reverse
 from django.utils import timezone
 from s3direct.fields import S3DirectField
+from django.contrib.sites.models import Site
 
 image_storage = FileSystemStorage(
-    location=u'{0}/logos/'.format(settings.MEDIA_ROOT),
-    base_url=u'{0}logos/'.format(settings.MEDIA_URL),
+    location=u'{0}'.format(settings.MEDIA_ROOT),
+    base_url=u'{0}'.format(settings.MEDIA_URL),
 )
 
 
@@ -25,8 +26,9 @@ def image_directory_path(instance, filename):
 
 class Event(models.Model):
     name = models.CharField(max_length=200, verbose_name='Event Name')
+    logo = models.ImageField(verbose_name='Logo for the event', upload_to=settings.MEDIA_URL, storage=image_storage)
     # logo = models.ImageField(verbose_name='Logo for the event', upload_to=image_directory_path, storage=image_storage)
-    logo = S3DirectField(dest='intered-files', max_length=250,null=True,blank=True)
+    # logo = S3DirectField(dest='intered-files', max_length=250,null=True,blank=True)
     start_date = models.DateField()
     end_date = models.DateField()
     event_registration_url = models.URLField(verbose_name="Event Registration Link", null=True, blank=True,
@@ -41,8 +43,9 @@ class Event(models.Model):
 @receiver(post_save, sender=Event)
 def createUrlLink(sender, instance, created, **kwargs):
     if instance.event_added is False:
+        current_site = Site.objects.get_current()
         instance.event_uuid = str(uuid.uuid4())[0:4]
-        instance.event_registration_url = reverse('register', args=[instance.event_uuid])
+        instance.event_registration_url = current_site.domain + "/" + reverse('register', args=[instance.event_uuid])
         instance.event_added = True
         instance.save()
 

@@ -9,5 +9,13 @@
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
       <jdbc-url>jdbc:postgresql://127.0.0.1:5432/intered</jdbc-url>
     </data-source>
+    <data-source source="LOCAL" name="Django default" uuid="e9839dcb-a0de-4fd8-9f4f-b8604c19efbe">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <imported>true</imported>
+      <remarks>$PROJECT_DIR$/intered/settings.py</remarks>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://127.0.0.1:5432/intered</jdbc-url>
+    </data-source>
   </component>
 </project>

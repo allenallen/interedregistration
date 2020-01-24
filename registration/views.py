@@ -256,7 +256,7 @@ def registration(request, uuid):
 
             msg = EmailMessage(subject='Thank You', body=html_message, from_email=settings.DEFAULT_FROM_EMAIL,
                                to=[student.email],
-                               cc=[settings.EMAIL_CC, settings.EMAIL_CC_1])
+                               cc=[settings.EMAIL_CC,])
 
             msg.attach(student.qr_code.name, student.qr_code.read(), 'image/png')
             # change

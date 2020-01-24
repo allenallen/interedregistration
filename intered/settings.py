@@ -128,23 +128,21 @@ STATIC_URL = '/static/'
 STATICFILES_DIR = (
     os.path.join(BASE_DIR, 'registration/static')
 )
-MEDIA_URL = '/media/'
+MEDIA_URL = 'media/'
 MEDIA_ROOT = (
     os.path.join(BASE_DIR, 'media/')
 )
 
 EMAIL_USE_TLS = True
 EMAIL_HOST_BACKUP = os.environ.get('EMAIL_SMTP_BACKUP', 'smtp.gmail.com')
-EMAIL_HOST = os.environ.get('EMAIL_SMTP', 'smtp.gmail.com')
+EMAIL_HOST = os.environ.get('EMAIL_SMTP', 'smtp.ionos.com')
 EMAIL_PORT = 587
-EMAIL_HOST_USER = os.environ.get('EMAIL_HOST', 'interedevents@gmail.com')
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST', 'events@inter-ed.com')
 EMAIL_HOST_USER_BACKUP1 = os.environ.get('EMAIL_HOST_USER_BACKUP1','interedevents4@gmail.com')
-EMAIL_HOST_USER_BACKUP2 = os.environ.get('EMAIL_HOST_USER_BACKUP2','events@inter-ed.com')
 EMAIL_HOST_USER_BACKUP_PASSWORD = os.environ.get('EMAIL_HOST_USER_BACKUP_PASSWORD', 'Intered811#')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASSWORD', 'Inter811#')
 DEFAULT_FROM_EMAIL = os.environ.get('EMAIL_HOST', 'events@inter-ed.com')
 EMAIL_CC = os.environ.get('EMAIL_CC', 'allenarcenal@gmail.com')
-EMAIL_CC_1 = os.environ.get('EMAIL_CC_1', 'allenarcenal@gmail.com')
 
 SECURE_CONTENT_TYPE_NOSNIFF = True
 

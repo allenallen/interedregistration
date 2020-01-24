@@ -58,6 +58,8 @@ class EventAdmin(admin.ModelAdmin):
         }),
     )
 
+    readonly_fields = ('event_registration_url',)
+
 
 admin.site.register(SchoolList)
 admin.site.register(ShsTrack)
